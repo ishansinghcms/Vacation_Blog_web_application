@@ -13,12 +13,9 @@ middlewareobj.checkCampgroundsOwnership = function(req , res, next)
         {
             if(error){res.render("back")}
             else
-        {       // does user own the campground--otherwise redirect
-                // foundC.author.id is an object whereas req.user._is is a string. whule displaying in the terminal they look equal, but they are not.
-                // so instead of "===" we use ."equals()"
-                if(foundC.author.id.equals(req.user._id))  // Is it the tha same user who created the campground?
-                {
-                    next(); // continue to compile the next code in the route.
+        {       
+                if(foundC.author.id.equals(req.user._id)) 
+                    next(); 
                 }
                 else
                 {
@@ -31,17 +28,17 @@ middlewareobj.checkCampgroundsOwnership = function(req , res, next)
     else
     {
         req.flash("error" , "You need to be logged in!")
-        res.redirect("back")  //## this will take the user back to the previous page.
+        res.redirect("back")
     }
 }
 
-middlewareobj.isLoggedIn = function(req , res , next)  //also used in this file
+middlewareobj.isLoggedIn = function(req , res , next) 
 {
     if(req.isAuthenticated())
     {
         return next();
     }
-    req.flash("error" , "Please need to be logged in!"); // connected to aaa.js
+    req.flash("error" , "Please need to be logged in!");
     res.redirect("/login");
 }
 
